@@ -259,6 +259,24 @@ public class DashboardController implements Initializable {
     @FXML
     private Button signout_btn;
 
+    @FXML
+    private TextField purchase_name;
+
+    @FXML
+    private TextField purchase_details;
+
+    @FXML
+    private TextField purchase_price;
+
+    @FXML
+    private TextField purchase_totalamount;
+
+    @FXML
+    private ComboBox<?> purchase_quantity;
+
+    @FXML
+    private DatePicker purchase_date;
+
     List<Product> productsList;
 
     public void onExit(){
@@ -403,12 +421,20 @@ public class DashboardController implements Initializable {
         }
         ObservableList comboList= FXCollections.observableArrayList(list);
         bill_quantity.setItems(comboList);
+        purchase_quantity.setItems(comboList);
     }
     public void checkForPriceandQuantity(){
         if(!bill_price.getText().isBlank()&& !bill_quantity.getSelectionModel().isEmpty()){
             bill_total_amount.setText(String.valueOf(Integer.parseInt(bill_price.getText())*Integer.parseInt(bill_quantity.getValue().toString())));
         }else{
             bill_total_amount.setText("0");
+        }
+    }
+    public void checkPurchaseForPriceandQuantity(){
+        if(!purchase_price.getText().isBlank()&& !purchase_quantity.getSelectionModel().isEmpty()){
+            purchase_totalamount.setText(String.valueOf(Integer.parseInt(purchase_price.getText())*Integer.parseInt(purchase_quantity.getValue().toString())));
+        }else{
+            purchase_totalamount.setText("0");
         }
     }
     public void getPriceOfTheItem(){
@@ -435,6 +461,13 @@ public class DashboardController implements Initializable {
                 getPriceOfTheItem();
             }
         });
+    }
+
+    public void onPurchaseInputTextChanged(){
+        purchase_price.setOnKeyReleased(event-> checkPurchaseForPriceandQuantity());
+        purchase_price.setOnKeyPressed(event-> checkPurchaseForPriceandQuantity());
+        purchase_price.setOnKeyTyped(event-> checkPurchaseForPriceandQuantity());
+        purchase_quantity.setOnAction(actionEvent -> checkPurchaseForPriceandQuantity());
     }
     public void addBillingData(){
         if(bill_item.getText().isBlank()||bill_quantity.getSelectionModel().isEmpty()||bill_price.getText().isBlank()||bill_total_amount.getText().isBlank()){
@@ -1119,7 +1152,7 @@ public class DashboardController implements Initializable {
             resultSet=statement.executeQuery(sql);
             Purchase purchase;
             while (resultSet.next()){
-                purchase=new Purchase(Integer.parseInt(resultSet.getString("id")),resultSet.getString("invoice"),resultSet.getString("shop and address"),Integer.parseInt(resultSet.getString("total_items")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date_of_purchase"));
+                purchase=new Purchase(Integer.parseInt(resultSet.getString("id")),resultSet.getString("invoice"),resultSet.getString("shop_and_address"),Integer.parseInt(resultSet.getString("total_items")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date_of_purchase"));
                 purchaseList.addAll(purchase);
             }
         }catch (Exception err){
@@ -1137,6 +1170,8 @@ public class DashboardController implements Initializable {
         purchase_col_date_of_purchase.setCellValueFactory(new PropertyValueFactory<>("dateOfPurchase"));
         purchase_table.setItems(purchaseList);
         getTotalPurchaseAmount();
+        LocalDate date=LocalDate.now();
+        purchase_date.setValue(date);
     }
 
     public void getTotalPurchase(){
@@ -1250,6 +1285,77 @@ public class DashboardController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    public void addPurchaseData(){
+        if(purchase_name.getText().isBlank()||purchase_quantity.getSelectionModel().isEmpty()||purchase_price.getText().isBlank()||purchase_details.getText().isBlank()){
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
+            alert.showAndWait();
+            return;
+        }
+        connection=Database.getInstance().connectDB();
+        String sql="INSERT INTO PURCHASE(invoice,shop_and_address,total_items,total_amount,date_of_purchase)VALUES(?,?,?,?,?)";
+        try {
+            purchase_total_amount.setText(String.valueOf(Integer.parseInt(purchase_price.getText())*Integer.parseInt(purchase_quantity.getValue().toString())));
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, purchase_name.getText());
+            preparedStatement.setString(2, purchase_details.getText());
+            preparedStatement.setInt(3,Integer.parseInt(purchase_quantity.getValue().toString()));
+            preparedStatement.setDouble(4, Double.parseDouble(purchase_total_amount.getText()));
+            preparedStatement.setDate(5, java.sql.Date.valueOf(purchase_date.getValue()));
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                showPurchaseData();
+                purchaseClearData();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
+                alert.showAndWait();
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    public void deletePurchaseData(){
+        connection = Database.getInstance().connectDB();
+        String sql;
+        try {
+            if(!purchase_table.getSelectionModel().isEmpty()){
+                sql="DELETE FROM PURCHASE WHERE id=?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1,purchase_table.getSelectionModel().getSelectedItem().getId());
+            }
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                showPurchaseData();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Message");
+                alert.setHeaderText(null);
+                alert.setContentText("No data present in the billing table..");
+                alert.showAndWait();
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
+    public void purchaseClearData(){
+        purchase_name.clear();
+        purchase_details.clear();
+        purchase_quantity.setValue(null);
+        purchase_price.clear();
+        purchase_totalamount.clear();
+        LocalDate date=LocalDate.now();
+        purchase_date.setValue(date);
+    }
+
+
     public void showDashboardData(){
      getTotalPurchase();
      getTotalSales();

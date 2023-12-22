@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="694.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashboardController">
+<AnchorPane prefHeight="694.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.DashboardController">
    <children>
       <AnchorPane prefHeight="694.0" prefWidth="1080.0">
          <children>
@@ -182,7 +182,7 @@
                            </children>
                         </Pane>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="billing_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css">
+                  <AnchorPane fx:id="billing_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" stylesheets="@dashboard.css" visible="false">
                      <children>
                         <TableView fx:id="billing_table" layoutX="13.0" layoutY="59.0" onMouseClicked="#selectBillingTableData" prefHeight="280.0" prefWidth="794.0" stylesheets="@dashboard.css">
                           <columns>
@@ -274,7 +274,7 @@
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="559.0" layoutY="534.0" prefHeight="32.0" prefWidth="15.0" text="₹ ">
+                        <Label layoutX="559.0" layoutY="534.0" prefHeight="32.0" prefWidth="15.0" text="₺">
                            <font>
                               <Font name="Dubai Bold" size="18.0" />
                            </font>
@@ -381,9 +381,9 @@
                            </font>
                         </Label>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                  <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0">
                      <children>
-                        <TableView fx:id="purchase_table" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="558.0" prefWidth="794.0" stylesheets="@dashboard.css">
+                        <TableView fx:id="purchase_table" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="370.0" prefWidth="794.0" stylesheets="@dashboard.css">
                            <columns>
                               <TableColumn fx:id="purchase_col_id" prefWidth="69.60000610351562" text="Id" />
                               <TableColumn fx:id="purchase_col_invoice" prefWidth="161.5999755859375" text="invoice" />
@@ -393,9 +393,9 @@
                               <TableColumn fx:id="purchase_col_date_of_purchase" minWidth="0.0" prefWidth="125.59995117187498" text="Date Of Purchase" />
                            </columns>
                         </TableView>
-                        <Button fx:id="purchase_btn_add" layoutX="744.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#addCustomerData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
+                        <Button fx:id="purchase_btn_delete" layoutX="744.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#deletePurchaseData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
                            <graphic>
-                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" size="18.0" />
+                              <FontAwesomeIconView fill="WHITE" glyphName="MINUS_CIRCLE" size="18.0" />
                            </graphic>
                         </Button>
                         <Button fx:id="purchase_btn_print" layoutX="687.0" layoutY="22.0" mnemonicParsing="false" onAction="#printPurchaseDetails" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
@@ -413,6 +413,58 @@
                               <Font name="Dubai Bold" size="18.0" />
                            </font>
                         </Label>
+                        <Label layoutX="27.0" layoutY="465.0" text="Store Name:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="26.0" layoutY="509.0" text="Shop Details:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="426.0" layoutY="466.0" text="Quantity:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="425.0" layoutY="510.0" text="Price:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="27.0" layoutY="551.0" text="Date:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="425.0" layoutY="553.0" text="Total Amount:">
+                           <font>
+                              <Font name="Dubai Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="purchase_name" layoutX="146.0" layoutY="467.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_details" layoutX="146.0" layoutY="511.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_price" layoutX="547.0" layoutY="512.0" onKeyReleased="#onPurchaseInputTextChanged" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_totalamount" disable="true" editable="false" layoutX="547.0" layoutY="555.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <DatePicker fx:id="purchase_date" layoutX="145.0" layoutY="553.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <ComboBox fx:id="purchase_quantity" layoutX="547.0" layoutY="468.0" prefWidth="150.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <Button fx:id="purchase_btn_add" layoutX="720.0" layoutY="586.0" mnemonicParsing="false" onAction="#addPurchaseData" styleClass="add" stylesheets="@dashboard.css" text="Add">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" />
+                           </graphic>
+                           <font>
+                              <Font name="Dubai Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="purchase_btn_clear" layoutX="586.0" layoutY="586.0" mnemonicParsing="false" onAction="#purchaseClearData" styleClass="clear" stylesheets="@dashboard.css" text="Clear Data">
+                           <graphic>
+                              <FontAwesomeIconView fill="WHITE" glyphName="REMOVE" />
+                           </graphic>
+                           <font>
+                              <Font name="Dubai Bold" size="16.0" />
+                           </font>
+                        </Button>
                      </children></AnchorPane>
                </children>
             </AnchorPane>
