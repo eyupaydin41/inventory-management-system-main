@@ -20,9 +20,9 @@
 		<property name="com.jaspersoft.studio.field.label" value="Name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="PhoneNumber" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="PhoneNumber"/>
-		<property name="com.jaspersoft.studio.field.label" value="PhoneNumber"/>
+	<field name="phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
 	<variable name="countCustomers" class="java.lang.Integer" calculation="Count">
@@ -76,7 +76,7 @@
 				<reportElement style="Column header" x="370" y="19" width="185" height="15" uuid="2bf409d1-a459-4910-9711-8582f40e0baf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce52831d-2de8-446a-8950-b87b14e38405"/>
 				</reportElement>
-				<text><![CDATA[PhoneNumber]]></text>
+				<text><![CDATA[phone_number]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -104,7 +104,7 @@
 				<reportElement style="Detail" x="370" y="0" width="185" height="15" uuid="a61575ba-558d-43b3-8a2b-ec6fea624263">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce52831d-2de8-446a-8950-b87b14e38405"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{PhoneNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

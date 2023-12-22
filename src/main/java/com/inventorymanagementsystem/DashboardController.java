@@ -27,13 +27,11 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -551,7 +549,7 @@ public class DashboardController implements Initializable {
     }
     public void updateSelectedBillingData() {
         connection = Database.getInstance().connectDB();
-        String sql = "UPDATE billing SET quantity=?, price=?, total_amount=? WHERE item_number=?";
+        String sql = "UPDATE billing SET quantity=?, price=?, total_amo unt=? WHERE item_number=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
 
@@ -742,7 +740,7 @@ public class DashboardController implements Initializable {
 
     public void printBill(){
      connection=Database.getInstance().connectDB();
-     String sql="SELECT * FROM `sales` s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=(SELECT MAX(inv_num) as inv_num FROM `sales`)";
+     String sql="SELECT * FROM sales s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=(SELECT MAX(inv_num) as inv_num FROM sales)";
      try{
          JasperDesign jasperDesign= JRXmlLoader.load(this.getClass().getClassLoader().getResourceAsStream("jasper-reports/Invoice.jrxml"));
          JRDesignQuery updateQuery=new JRDesignQuery();
@@ -806,13 +804,30 @@ public class DashboardController implements Initializable {
         return customersList;
     }
     public void showCustomerData(){
-        ObservableList<Customer> customerList=listCustomerData();
+        ObservableList<Customer> customerList=listCustomerData().sorted(new Comparator<Customer>() {
+            @Override
+            public int compare(Customer o1, Customer o2) {
+                return Integer.compare(o1.getId(),o2.getId());
+            }
+        });
+
         cust_col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         cust_col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
         cust_col_phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         customer_table.setItems(customerList);
     }
     public boolean checkForCustomerAvailability(){
+
+        if (cust_field_name.getText().isEmpty() || cust_field_phone.getText().isEmpty()) {
+            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Müşteri ismi ve telefon numarası boş bırakılamaz.");
+            alert.showAndWait();
+            return false;
+        }
+
+
         connection=Database.getInstance().connectDB();
         String sql="SELECT * FROM CUSTOMERS WHERE phone_number=?";
         try{
@@ -880,8 +895,10 @@ public class DashboardController implements Initializable {
             alert.showAndWait();
             return;
         }
+
         connection = Database.getInstance().connectDB();
         String sql = "UPDATE CUSTOMERS SET name=? WHERE phone_number=?";
+        String sql2 = "UPDATE CUSTOMERS SET phone_number=? WHERE name=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,cust_field_name.getText());
@@ -890,12 +907,27 @@ public class DashboardController implements Initializable {
             if (result > 0) {
                 showCustomerData();
                 customerClearData();
+                showSalesData();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as name, phone number .");
-                alert.showAndWait();
+                try {
+                    preparedStatement = connection.prepareStatement(sql2);
+                    preparedStatement.setString(1, cust_field_phone.getText());
+                    preparedStatement.setString(2,cust_field_name.getText());
+                    int result2 = preparedStatement.executeUpdate();
+                    if (result2 > 0) {
+                        showCustomerData();
+                        customerClearData();
+                        showSalesData();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Please fill the mandatory data such as name, phone number .");
+                        alert.showAndWait();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -913,9 +945,27 @@ public class DashboardController implements Initializable {
         }
         connection = Database.getInstance().connectDB();
         String sql="DELETE FROM CUSTOMERS WHERE phone_number=?";
+        String sql2 = "DELETE FROM sales WHERE cust_id=?";
+
+        try {
+            preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setInt(1,customer_table.getSelectionModel().getSelectedItem().getId());
+
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                showSalesData();
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,customer_table.getSelectionModel().getSelectedItem().getPhoneNumber());
+
             int result = preparedStatement.executeUpdate();
             if (result > 0) {
                 showCustomerData();
