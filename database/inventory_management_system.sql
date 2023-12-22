@@ -44,14 +44,14 @@ CREATE TABLE `billing` (
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL,
   `Name` varchar(255) NOT NULL,
-  `PhoneNumber` varchar(10) NOT NULL
+  `phone_number` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `Name`, `PhoneNumber`) VALUES
+INSERT INTO `customers` (`id`, `Name`, `phone_number`) VALUES
 (24, 'Shahzaib', '7070564601'),
 (23, 'Rashid Makki', '7070564603'),
 (25, 'Shadab', '9818977363');
@@ -115,7 +115,7 @@ CREATE TABLE `purchase` (
   `shop and address` varchar(1000) NOT NULL,
   `total_items` int(50) NOT NULL,
   `total_amount` double(50,2) NOT NULL,
-  `date_of_purchase` varchar(255) NOT NULL
+  `date_of_purchase`  DATE NOT NULL --varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -139,7 +139,7 @@ CREATE TABLE `sales` (
   `price` double(50,2) NOT NULL,
   `quantity` int(11) NOT NULL,
   `total_amount` double(50,2) NOT NULL,
-  `date` varchar(255) NOT NULL,
+  `date`  DATE NOT NULL, --varchar(255)
   `item_number` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -189,7 +189,7 @@ ALTER TABLE `billing`
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`PhoneNumber`),
+  ADD PRIMARY KEY (`phone_number`),
   ADD UNIQUE KEY `id` (`id`);
 
 --

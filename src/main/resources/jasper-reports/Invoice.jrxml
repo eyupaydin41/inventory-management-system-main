@@ -90,7 +90,7 @@
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
 		<parameter name="InvNum" class="java.lang.String"/>
 		<queryString language="SQL">
-			<![CDATA[SELECT * FROM `sales` s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=$P{InvNum};]]>
+			<![CDATA[SELECT * FROM sales s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=$P{InvNum};]]>
 		</queryString>
 		<field name="item_number" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.name" value="item_number"/>
@@ -117,7 +117,7 @@
 		</variable>
 	</subDataset>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM `sales` s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=(SELECT MAX(inv_num) as inv_num FROM `sales`);]]>
+		<![CDATA[SELECT * FROM sales s INNER JOIN customers c ON s.cust_id=c.id and s.inv_num=(SELECT MAX(inv_num) as inv_num FROM sales);]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -169,9 +169,9 @@
 		<property name="com.jaspersoft.studio.field.label" value="Name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="PhoneNumber" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="PhoneNumber"/>
-		<property name="com.jaspersoft.studio.field.label" value="PhoneNumber"/>
+	<field name="phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
 	<variable name="Final Amount" class="java.lang.Double" calculation="Sum">
@@ -263,7 +263,7 @@
 				<textElement>
 					<font size="13" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PhoneNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
 			</textField>
 			<componentElement>
 				<reportElement x="-1" y="200" width="556" height="90" uuid="4964963c-72e0-4fdc-b397-30fe7fc39546">

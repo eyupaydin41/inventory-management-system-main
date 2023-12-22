@@ -65,9 +65,9 @@
 			<property name="com.jaspersoft.studio.field.label" value="Name"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 		</field>
-		<field name="PhoneNumber" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="PhoneNumber"/>
-			<property name="com.jaspersoft.studio.field.label" value="PhoneNumber"/>
+		<field name="phone_number" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+			<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 		</field>
 		<field name="price" class="java.lang.Double">
@@ -139,14 +139,14 @@
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="Name" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="Name"/>
-		<property name="com.jaspersoft.studio.field.label" value="Name"/>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
-	<field name="PhoneNumber" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="PhoneNumber"/>
-		<property name="com.jaspersoft.studio.field.label" value="PhoneNumber"/>
+	<field name="phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="customers"/>
 	</field>
 	<variable name="Total Amount Sold" class="java.lang.Double" calculation="Sum">
@@ -322,7 +322,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="9"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{PhoneNumber}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
