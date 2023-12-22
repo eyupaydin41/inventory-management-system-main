@@ -25,12 +25,14 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.textfield.TextFields;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -447,24 +449,24 @@ public class DashboardController implements Initializable {
         }
         connection=Database.getInstance().connectDB();
         String sql="INSERT INTO BILLING(item_number,quantity,price,total_amount)VALUES(?,?,?,?)";
-        try{
-            preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_item.getText());
-            preparedStatement.setString(2, bill_quantity.getValue().toString());
-            preparedStatement.setString(3, bill_price.getText());
-            preparedStatement.setString(4,bill_total_amount.getText());
-            int result=preparedStatement.executeUpdate();
-            if(result>0){
-               showBillingData();
-               billClearData();
-            }else{
-                Alert alert=new Alert(Alert.AlertType.ERROR);
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, bill_item.getText());
+            preparedStatement.setInt(2, Integer.parseInt(bill_quantity.getValue().toString()));
+            preparedStatement.setInt(3,Integer.parseInt(bill_price.getText()));
+            preparedStatement.setInt(4, Integer.parseInt(bill_total_amount.getText()));
+            int result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                showBillingData();
+                billClearData();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
+                alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
                 alert.showAndWait();
             }
-        }catch (Exception err){
+        } catch (Exception err) {
             err.printStackTrace();
         }
     }
@@ -549,24 +551,47 @@ public class DashboardController implements Initializable {
     }
     public void updateSelectedBillingData() {
         connection = Database.getInstance().connectDB();
-        String sql = "UPDATE billing SET quantity=?,price=?,total_amount=? WHERE item_number=?";
+        String sql = "UPDATE billing SET quantity=?, price=?, total_amount=? WHERE item_number=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,bill_quantity.getValue().toString());
-            preparedStatement.setString(2, bill_price.getText());
-            preparedStatement.setString(3, bill_total_amount.getText());
-            preparedStatement.setString(4, bill_item.getText());
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showBillingData();
-                billClearData();
+
+            // ComboBox'tan seçilen değeri kontrol et
+            if (bill_quantity.getValue() != null) {
+                int quantity = Integer.parseInt(bill_quantity.getValue().toString());
+                double price = Double.parseDouble(bill_price.getText());
+                double totalAmount = Double.parseDouble(bill_total_amount.getText());
+
+                preparedStatement.setInt(1, quantity);
+                preparedStatement.setDouble(2, price);
+                preparedStatement.setDouble(3, totalAmount);
+                preparedStatement.setString(4, bill_item.getText());
+
+                int result = preparedStatement.executeUpdate();
+                if (result > 0) {
+                    showBillingData();
+                    billClearData();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
+                    alert.showAndWait();
+                }
             } else {
+                // ComboBox'tan seçilen değer null ise kullanıcıyı bilgilendir
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
+                alert.setContentText("Please select a quantity.");
                 alert.showAndWait();
             }
+        } catch (NumberFormatException e) {
+            // Sayısal dönüşüm hatası kontrolü
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter valid numeric values for quantity, price, and total amount.");
+            alert.showAndWait();
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -609,7 +634,7 @@ public class DashboardController implements Initializable {
             return false;
         }
         connection = Database.getInstance().connectDB();
-        String sql="SELECT * FROM CUSTOMERS WHERE phonenumber=?";
+        String sql="SELECT * FROM CUSTOMERS WHERE phone_number=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,bill_phone.getText());
@@ -622,7 +647,7 @@ public class DashboardController implements Initializable {
                 alert.showAndWait();
                 return true;
             } else {
-                String customerSql="INSERT INTO CUSTOMERS(name,phonenumber) VALUES(?,?)";
+                String customerSql="INSERT INTO CUSTOMERS(name,phone_number) VALUES(?,?)";
                 preparedStatement = connection.prepareStatement(customerSql);
                 preparedStatement.setString(1,bill_name.getText());
                 preparedStatement.setString(2,bill_phone.getText());
@@ -647,7 +672,7 @@ public class DashboardController implements Initializable {
     public void saveInvoiceDetails(){
         // GET CUSTOMER ID FOR MAPPING INVOICE RECORDS
         connection=Database.getInstance().connectDB();
-        String sql="SELECT id FROM CUSTOMERS WHERE PHONENUMBER=?";
+        String sql="SELECT id FROM CUSTOMERS WHERE phone_number=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,bill_phone.getText());
@@ -665,11 +690,11 @@ public class DashboardController implements Initializable {
                       preparedStatement=connection.prepareStatement(salesDetailsSQL);
                       preparedStatement.setString(1,inv_num.getText());
                       preparedStatement.setString(2,resultSet.getString("item_number"));
-                      preparedStatement.setString(3,custId);
-                      preparedStatement.setString(4,resultSet.getString("price"));
-                      preparedStatement.setString(5,resultSet.getString("quantity"));
-                      preparedStatement.setString(6,resultSet.getString("total_amount"));
-                      preparedStatement.setString(7,bill_date.getValue().toString());
+                      preparedStatement.setInt(3,Integer.parseInt(custId));
+                      preparedStatement.setDouble(4, resultSet.getDouble("price")); //preparedStatement.setBigDecimal(4, new BigDecimal(resultSet.getString("price")));
+                      preparedStatement.setInt(5, resultSet.getInt("quantity")); //preparedStatement.setString(5,resultSet.getString("quantity"));
+                      preparedStatement.setDouble(6, resultSet.getDouble("total_amount")); //preparedStatement.setBigDecimal(6, new BigDecimal(resultSet.getString("total_amount")));
+                      preparedStatement.setDate(7, java.sql.Date.valueOf(bill_date.getValue()));   //preparedStatement.setString(7,bill_date.getValue().toString());
                       preparedStatement.executeUpdate();
                       count++;
                   }
@@ -770,7 +795,7 @@ public class DashboardController implements Initializable {
 
             Customer customer;
             while (resultSet.next()){
-                customer=new Customer(Integer.parseInt(resultSet.getString("id")),resultSet.getString("name"),resultSet.getString("phonenumber"));
+                customer=new Customer(Integer.parseInt(resultSet.getString("id")),resultSet.getString("name"),resultSet.getString("phone_number"));
                 customersList.addAll(customer);
             }
 
@@ -789,7 +814,7 @@ public class DashboardController implements Initializable {
     }
     public boolean checkForCustomerAvailability(){
         connection=Database.getInstance().connectDB();
-        String sql="SELECT * FROM CUSTOMERS WHERE phoneNumber=?";
+        String sql="SELECT * FROM CUSTOMERS WHERE phone_number=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,cust_field_phone.getText());
@@ -815,7 +840,7 @@ public class DashboardController implements Initializable {
             return;
         }
         connection=Database.getInstance().connectDB();
-        String sql="INSERT INTO CUSTOMERS(name,phonenumber)VALUES(?,?)";
+        String sql="INSERT INTO CUSTOMERS(name,phone_number)VALUES(?,?)";
         try{
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,cust_field_name.getText());
@@ -856,7 +881,7 @@ public class DashboardController implements Initializable {
             return;
         }
         connection = Database.getInstance().connectDB();
-        String sql = "UPDATE CUSTOMERS SET name=? WHERE phonenumber=?";
+        String sql = "UPDATE CUSTOMERS SET name=? WHERE phone_number=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,cust_field_name.getText());
@@ -887,7 +912,7 @@ public class DashboardController implements Initializable {
             return;
         }
         connection = Database.getInstance().connectDB();
-        String sql="DELETE FROM CUSTOMERS WHERE phonenumber=?";
+        String sql="DELETE FROM CUSTOMERS WHERE phone_number=?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,customer_table.getSelectionModel().getSelectedItem().getPhoneNumber());
@@ -1125,7 +1150,7 @@ public class DashboardController implements Initializable {
         LocalDate date=LocalDate.now();
         String monthName=date.getMonth().toString();
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE MONTHNAME(DATE)=?";
+        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,monthName);
@@ -1152,7 +1177,7 @@ public class DashboardController implements Initializable {
         LocalDate date=LocalDate.now();
         String monthName=date.getMonth().toString();
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE MONTHNAME(DATE)=?";
+        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,monthName);
