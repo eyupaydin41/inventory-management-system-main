@@ -383,7 +383,7 @@
                      </children></AnchorPane>
                   <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0">
                      <children>
-                        <TableView fx:id="purchase_table" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="370.0" prefWidth="794.0" stylesheets="@dashboard.css">
+                        <TableView fx:id="purchase_table" editable="true" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="286.0" prefWidth="794.0" stylesheets="@dashboard.css">
                            <columns>
                               <TableColumn fx:id="purchase_col_id" prefWidth="69.60000610351562" text="Id" />
                               <TableColumn fx:id="purchase_col_invoice" prefWidth="161.5999755859375" text="invoice" />
@@ -413,42 +413,42 @@
                               <Font name="Dubai Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="27.0" layoutY="465.0" text="Store Name:">
+                        <Label layoutX="81.0" layoutY="408.0" text="Store Name:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="26.0" layoutY="509.0" text="Shop Details:">
+                        <Label layoutX="80.0" layoutY="452.0" text="Shop Details:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="426.0" layoutY="466.0" text="Quantity:">
+                        <Label layoutX="470.0" layoutY="409.0" text="Quantity:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="425.0" layoutY="510.0" text="Price:">
+                        <Label layoutX="469.0" layoutY="453.0" text="Price:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="27.0" layoutY="551.0" text="Date:">
+                        <Label layoutX="81.0" layoutY="494.0" text="Date:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="425.0" layoutY="553.0" text="Total Amount:">
+                        <Label layoutX="469.0" layoutY="496.0" text="Total Amount:">
                            <font>
                               <Font name="Dubai Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="purchase_name" layoutX="146.0" layoutY="467.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="purchase_details" layoutX="146.0" layoutY="511.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="purchase_price" layoutX="547.0" layoutY="512.0" onKeyReleased="#onPurchaseInputTextChanged" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="purchase_totalamount" disable="true" editable="false" layoutX="547.0" layoutY="555.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <DatePicker fx:id="purchase_date" layoutX="145.0" layoutY="553.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <ComboBox fx:id="purchase_quantity" layoutX="547.0" layoutY="468.0" prefWidth="150.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_name" layoutX="200.0" layoutY="410.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_details" layoutX="200.0" layoutY="454.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_price" layoutX="591.0" layoutY="455.0" onKeyReleased="#onPurchaseInputTextChanged" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_totalamount" disable="true" editable="false" layoutX="591.0" layoutY="498.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <DatePicker fx:id="purchase_date" layoutX="199.0" layoutY="496.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <ComboBox fx:id="purchase_quantity" layoutX="591.0" layoutY="411.0" prefWidth="150.0" styleClass="textfield" stylesheets="@dashboard.css" />
                         <Button fx:id="purchase_btn_add" layoutX="720.0" layoutY="586.0" mnemonicParsing="false" onAction="#addPurchaseData" styleClass="add" stylesheets="@dashboard.css" text="Add">
                            <graphic>
                               <FontAwesomeIconView fill="WHITE" glyphName="PLUS_CIRCLE" />
@@ -465,6 +465,8 @@
                               <Font name="Dubai Bold" size="16.0" />
                            </font>
                         </Button>
+                        <Separator layoutX="13.0" layoutY="373.0" prefHeight="2.0" prefWidth="794.0" />
+                        <Separator layoutX="13.0" layoutY="565.0" prefHeight="2.0" prefWidth="794.0" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>

@@ -382,8 +382,7 @@ public class DashboardController implements Initializable {
             alert.showAndWait();
         }
         return productsList;
-    }
-
+    }  // Ürünleri listeleme
     public void setInvoiceNum(){
         connection=Database.getInstance().connectDB();
         String sql="SELECT MAX(inv_num) AS inv_num FROM sales";
@@ -406,14 +405,13 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             err.printStackTrace();
         }
-    }
+    } // Fatura numarasını otomatik ayarlama
     public void setAutoCompleteItemNumber(){
         getItemsList();
         List<String> itemNumberList=productsList.stream().map(Product::getItemNumber).collect(Collectors.toList());
         ObservableList<String> observableItemList=FXCollections.observableArrayList(itemNumberList);
         TextFields.bindAutoCompletion(bill_item,observableItemList);
-    }
-
+    } // Ürün numarasını otomatik doldurma
     public void comboBoxQuantity(){
         List<String> list=new ArrayList<>();
         for(String quantity:quantityList){
@@ -422,21 +420,21 @@ public class DashboardController implements Initializable {
         ObservableList comboList= FXCollections.observableArrayList(list);
         bill_quantity.setItems(comboList);
         purchase_quantity.setItems(comboList);
-    }
+    } // Miktar seçme kutucuğunu ayarlama
     public void checkForPriceandQuantity(){
-        if(!bill_price.getText().isBlank()&& !bill_quantity.getSelectionModel().isEmpty()){
+        if(!bill_price.getText().isBlank() && !bill_quantity.getSelectionModel().isEmpty()){
             bill_total_amount.setText(String.valueOf(Integer.parseInt(bill_price.getText())*Integer.parseInt(bill_quantity.getValue().toString())));
         }else{
             bill_total_amount.setText("0");
         }
-    }
+    } // Toplam fiyatı otomatik doldurma ( Bill )
     public void checkPurchaseForPriceandQuantity(){
         if(!purchase_price.getText().isBlank()&& !purchase_quantity.getSelectionModel().isEmpty()){
             purchase_totalamount.setText(String.valueOf(Integer.parseInt(purchase_price.getText())*Integer.parseInt(purchase_quantity.getValue().toString())));
         }else{
             purchase_totalamount.setText("0");
         }
-    }
+    } // Toplam fiyatı otomatik doldurma ( Purchase )
     public void getPriceOfTheItem(){
         try {
             Product product = productsList.stream().filter(prod -> prod.getItemNumber().equals(bill_item.getText())).findAny().get();
@@ -449,7 +447,7 @@ public class DashboardController implements Initializable {
             alert.setContentText("Exception Item Number : "+err.getMessage());
             alert.showAndWait();
         }
-    }
+    } // Products tablosunda bulunan ürünün fiyatını otomatik doldurma
 
     public void onInputTextChanged(){
         bill_price.setOnKeyReleased(event-> checkForPriceandQuantity());
@@ -461,14 +459,14 @@ public class DashboardController implements Initializable {
                 getPriceOfTheItem();
             }
         });
-    }
+    } // Fiyatta değişiklik olduğunu kontrol etme ( Bill )
 
     public void onPurchaseInputTextChanged(){
         purchase_price.setOnKeyReleased(event-> checkPurchaseForPriceandQuantity());
         purchase_price.setOnKeyPressed(event-> checkPurchaseForPriceandQuantity());
         purchase_price.setOnKeyTyped(event-> checkPurchaseForPriceandQuantity());
         purchase_quantity.setOnAction(actionEvent -> checkPurchaseForPriceandQuantity());
-    }
+    } // Fiyatta değişiklik olduğunu kontrol etme ( Purchase )
     public void addBillingData(){
         if(bill_item.getText().isBlank()||bill_quantity.getSelectionModel().isEmpty()||bill_price.getText().isBlank()||bill_total_amount.getText().isBlank()){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
@@ -500,7 +498,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura ekleme
 
     public ObservableList<Billing> listBilligData(){
         ObservableList<Billing> billingList=FXCollections.observableArrayList();
@@ -522,7 +520,7 @@ public class DashboardController implements Initializable {
             err.printStackTrace();
         }
         return billingList;
-    }
+    } // Faturaları listeleme
 
     public void calculateFinalAmount(){
         connection=Database.getInstance().connectDB();
@@ -538,7 +536,7 @@ public class DashboardController implements Initializable {
             err.printStackTrace();
         }
 
-    }
+    } // Tüm faturalardaki fiyatı toplama
 
     public void showBillingData(){
         ObservableList<Billing> billingList=listBilligData();
@@ -556,19 +554,19 @@ public class DashboardController implements Initializable {
             final_amount.setText("0.00");
         }
 
-    }
+    } // Faturayı ekrana yansıtma
 
     public void billClearCustomerData(){
         bill_name.setText("");
         bill_phone.setText("");
-    }
+    } // Fatura sahibi bilgileri temizleme
 
     public void billClearData(){
         bill_item.clear();
         bill_quantity.setValue(null);
         bill_price.setText("");
         bill_total_amount.setText("");
-    }
+    } // Fatura bilgileri temizleme
 
     public void selectBillingTableData(){
         int num=billing_table.getSelectionModel().getSelectedIndex();
@@ -626,7 +624,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura bilgileri düzenleme
 
     public void deleteBillingData(){
         connection = Database.getInstance().connectDB();
@@ -654,7 +652,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura silme
     public boolean saveCustomerDetails(){
         if(bill_phone.getText().isBlank() || bill_name.getText().isBlank()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

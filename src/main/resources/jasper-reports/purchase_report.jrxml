@@ -68,9 +68,9 @@
 			<property name="com.jaspersoft.studio.field.label" value="invoice"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="purchase"/>
 		</field>
-		<field name="shop and address" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="shop and address"/>
-			<property name="com.jaspersoft.studio.field.label" value="shop and address"/>
+		<field name="shop_and_address" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="shop_and_address"/>
+			<property name="com.jaspersoft.studio.field.label" value="shop_and_address"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="purchase"/>
 		</field>
 		<field name="total_items" class="java.lang.Integer">
@@ -102,9 +102,9 @@
 		<property name="com.jaspersoft.studio.field.label" value="invoice"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="purchase"/>
 	</field>
-	<field name="shop and address" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="shop and address"/>
-		<property name="com.jaspersoft.studio.field.label" value="shop and address"/>
+	<field name="shop_and_address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="shop_and_address"/>
+		<property name="com.jaspersoft.studio.field.label" value="shop_and_address"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="purchase"/>
 	</field>
 	<field name="total_items" class="java.lang.Integer">
@@ -255,7 +255,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{shop and address}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{shop_and_address}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
