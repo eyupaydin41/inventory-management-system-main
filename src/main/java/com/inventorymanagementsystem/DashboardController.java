@@ -1231,12 +1231,15 @@ public class DashboardController implements Initializable {
 
     public void getSalesDetailsOfThisMonth(){
         LocalDate date=LocalDate.now();
-        String monthName=date.getMonth().toString();
+        String monthName = date.getMonth().name();
+        String month=Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+        String concatYear = year + "-" + month;
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
+        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE TO_CHAR(date, 'YYYY-MM')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
+            preparedStatement.setString(1,concatYear);
             resultSet=preparedStatement.executeQuery();
             while (resultSet.next()){
                 String result=resultSet.getString("total_sales_this_month");
@@ -1259,11 +1262,14 @@ public class DashboardController implements Initializable {
     public void getItemSoldThisMonth(){
         LocalDate date=LocalDate.now();
         String monthName=date.getMonth().toString();
+        String month= Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+        String concatDate = year + "-" + month;
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
+        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE TO_CHAR(date, 'YYYY-MM')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
+            preparedStatement.setString(1,concatDate);
             resultSet=preparedStatement.executeQuery();
             while (resultSet.next()){
                 String result=resultSet.getString("total_items_sold_this_month");
@@ -1352,7 +1358,6 @@ public class DashboardController implements Initializable {
         LocalDate date=LocalDate.now();
         purchase_date.setValue(date);
     }
-
 
     public void showDashboardData(){
      getTotalPurchase();
