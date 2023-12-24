@@ -28,12 +28,10 @@ import org.controlsfx.control.textfield.TextFields;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
@@ -284,17 +282,19 @@ public class DashboardController implements Initializable {
     }
 
     public void activateAnchorPane(){
+        Button[] btnlist = {dashboard_btn,billing_btn,purchase_btn,customer_btn,sales_btn};
         dashboard_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(true);
             billing_pane.setVisible(false);
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         billing_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -302,11 +302,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         customer_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -314,11 +314,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(true);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         sales_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -326,11 +326,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(true);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         purchase_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -338,11 +338,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(true);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
             });
 
 
@@ -382,8 +382,7 @@ public class DashboardController implements Initializable {
             alert.showAndWait();
         }
         return productsList;
-    }
-
+    }  // Ürünleri listeleme
     public void setInvoiceNum(){
         connection=Database.getInstance().connectDB();
         String sql="SELECT MAX(inv_num) AS inv_num FROM sales";
@@ -406,14 +405,13 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             err.printStackTrace();
         }
-    }
+    } // Fatura numarasını otomatik ayarlama
     public void setAutoCompleteItemNumber(){
         getItemsList();
         List<String> itemNumberList=productsList.stream().map(Product::getItemNumber).collect(Collectors.toList());
         ObservableList<String> observableItemList=FXCollections.observableArrayList(itemNumberList);
         TextFields.bindAutoCompletion(bill_item,observableItemList);
-    }
-
+    } // Ürün numarasını otomatik doldurma
     public void comboBoxQuantity(){
         List<String> list=new ArrayList<>();
         for(String quantity:quantityList){
@@ -422,21 +420,21 @@ public class DashboardController implements Initializable {
         ObservableList comboList= FXCollections.observableArrayList(list);
         bill_quantity.setItems(comboList);
         purchase_quantity.setItems(comboList);
-    }
+    } // Miktar seçme kutucuğunu ayarlama
     public void checkForPriceandQuantity(){
-        if(!bill_price.getText().isBlank()&& !bill_quantity.getSelectionModel().isEmpty()){
+        if(!bill_price.getText().isBlank() && !bill_quantity.getSelectionModel().isEmpty()){
             bill_total_amount.setText(String.valueOf(Integer.parseInt(bill_price.getText())*Integer.parseInt(bill_quantity.getValue().toString())));
         }else{
             bill_total_amount.setText("0");
         }
-    }
+    } // Toplam fiyatı otomatik doldurma ( Bill )
     public void checkPurchaseForPriceandQuantity(){
         if(!purchase_price.getText().isBlank()&& !purchase_quantity.getSelectionModel().isEmpty()){
             purchase_totalamount.setText(String.valueOf(Integer.parseInt(purchase_price.getText())*Integer.parseInt(purchase_quantity.getValue().toString())));
         }else{
             purchase_totalamount.setText("0");
         }
-    }
+    } // Toplam fiyatı otomatik doldurma ( Purchase )
     public void getPriceOfTheItem(){
         try {
             Product product = productsList.stream().filter(prod -> prod.getItemNumber().equals(bill_item.getText())).findAny().get();
@@ -449,7 +447,7 @@ public class DashboardController implements Initializable {
             alert.setContentText("Exception Item Number : "+err.getMessage());
             alert.showAndWait();
         }
-    }
+    } // Products tablosunda bulunan ürünün fiyatını otomatik doldurma
 
     public void onInputTextChanged(){
         bill_price.setOnKeyReleased(event-> checkForPriceandQuantity());
@@ -461,14 +459,14 @@ public class DashboardController implements Initializable {
                 getPriceOfTheItem();
             }
         });
-    }
+    } // Fiyatta değişiklik olduğunu kontrol etme ( Bill )
 
     public void onPurchaseInputTextChanged(){
         purchase_price.setOnKeyReleased(event-> checkPurchaseForPriceandQuantity());
         purchase_price.setOnKeyPressed(event-> checkPurchaseForPriceandQuantity());
         purchase_price.setOnKeyTyped(event-> checkPurchaseForPriceandQuantity());
         purchase_quantity.setOnAction(actionEvent -> checkPurchaseForPriceandQuantity());
-    }
+    } // Fiyatta değişiklik olduğunu kontrol etme ( Purchase )
     public void addBillingData(){
         if(bill_item.getText().isBlank()||bill_quantity.getSelectionModel().isEmpty()||bill_price.getText().isBlank()||bill_total_amount.getText().isBlank()){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
@@ -500,7 +498,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura ekleme
 
     public ObservableList<Billing> listBilligData(){
         ObservableList<Billing> billingList=FXCollections.observableArrayList();
@@ -522,7 +520,7 @@ public class DashboardController implements Initializable {
             err.printStackTrace();
         }
         return billingList;
-    }
+    } // Faturaları listeleme
 
     public void calculateFinalAmount(){
         connection=Database.getInstance().connectDB();
@@ -538,7 +536,7 @@ public class DashboardController implements Initializable {
             err.printStackTrace();
         }
 
-    }
+    } // Tüm faturalardaki fiyatı toplama
 
     public void showBillingData(){
         ObservableList<Billing> billingList=listBilligData();
@@ -556,19 +554,19 @@ public class DashboardController implements Initializable {
             final_amount.setText("0.00");
         }
 
-    }
+    } // Faturayı ekrana yansıtma
 
     public void billClearCustomerData(){
         bill_name.setText("");
         bill_phone.setText("");
-    }
+    } // Fatura sahibi bilgileri temizleme
 
     public void billClearData(){
         bill_item.clear();
         bill_quantity.setValue(null);
         bill_price.setText("");
         bill_total_amount.setText("");
-    }
+    } // Fatura bilgileri temizleme
 
     public void selectBillingTableData(){
         int num=billing_table.getSelectionModel().getSelectedIndex();
@@ -626,7 +624,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura bilgileri düzenleme
 
     public void deleteBillingData(){
         connection = Database.getInstance().connectDB();
@@ -654,7 +652,7 @@ public class DashboardController implements Initializable {
         } catch (Exception err) {
             err.printStackTrace();
         }
-    }
+    } // Fatura silme
     public boolean saveCustomerDetails(){
         if(bill_phone.getText().isBlank() || bill_name.getText().isBlank()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1231,14 +1229,64 @@ public class DashboardController implements Initializable {
         dash_total_stocks.setText(String.valueOf(totalStockLeft));
     }
 
+    public String translateMonth() {
+        LocalDate date=LocalDate.now();
+        String monthName = date.getMonth().name();
+
+        switch (monthName) {
+            case "JANUARY":
+                monthName = "OCAK";
+                break;
+            case "FEBRUARY":
+                monthName = "ŞUBAT";
+                break;
+            case "MARCH":
+                monthName = "MART";
+                break;
+            case "APRİL":
+                monthName = "NİSAN";
+                break;
+            case "MAY":
+                monthName = "MAYIS";
+                break;
+            case "JUNE":
+                monthName = "HAZİRAN";
+                break;
+            case "JULY":
+                monthName = "TEMMUZ";
+                break;
+            case "AUGUST":
+                monthName = "AĞUSTOS";
+                break;
+            case "SEPTEMBER":
+                monthName = "EYLÜL";
+                break;
+            case "OCTOBER":
+                monthName = "EKİM";
+                break;
+            case "NOVEMBER":
+                monthName = "KASIM";
+                break;
+            case "DECEMBER":
+                monthName = "ARALIK";
+                break;
+        }
+        return monthName;
+    }
+
     public void getSalesDetailsOfThisMonth(){
         LocalDate date=LocalDate.now();
-        String monthName=date.getMonth().toString();
+
+
+
+        String month=Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+        String concatYear = year + "-" + month;
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
+        String sql="SELECT SUM(total_amount) as total_sales_this_month FROM SALES WHERE TO_CHAR(date, 'YYYY-MM')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
+            preparedStatement.setString(1,concatYear);
             resultSet=preparedStatement.executeQuery();
             while (resultSet.next()){
                 String result=resultSet.getString("total_sales_this_month");
@@ -1247,7 +1295,7 @@ public class DashboardController implements Initializable {
                 }else{
                     dash_total_sales_this_month.setText(result);
                 }
-                dash_total_sales_this_month_name.setText(monthName);
+                dash_total_sales_this_month_name.setText(translateMonth());
             }
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1261,11 +1309,14 @@ public class DashboardController implements Initializable {
     public void getItemSoldThisMonth(){
         LocalDate date=LocalDate.now();
         String monthName=date.getMonth().toString();
+        String month= Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+        String concatDate = year + "-" + month;
         connection=Database.getInstance().connectDB();
-        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE TO_CHAR(date, 'Month')=?";
+        String sql="SELECT SUM(quantity) as total_items_sold_this_month FROM SALES WHERE TO_CHAR(date, 'YYYY-MM')=?";
         try{
             preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,monthName);
+            preparedStatement.setString(1,concatDate);
             resultSet=preparedStatement.executeQuery();
             while (resultSet.next()){
                 String result=resultSet.getString("total_items_sold_this_month");
@@ -1274,7 +1325,7 @@ public class DashboardController implements Initializable {
                 }else{
                     dash_total_items_sold_this_month.setText(result);
                 }
-                dash_total_sales_items_this_month_name.setText(monthName);
+                dash_total_sales_items_this_month_name.setText(translateMonth());
             }
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1354,7 +1405,6 @@ public class DashboardController implements Initializable {
         LocalDate date=LocalDate.now();
         purchase_date.setValue(date);
     }
-
 
     public void showDashboardData(){
      getTotalPurchase();

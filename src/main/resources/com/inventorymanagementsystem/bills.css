@@ -1,7 +1,7 @@
 .close,.print{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
 -fx-background-radius:5px;
--fx-cursor:hand;
+    -fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%);
+    -fx-cursor:hand;
 -fx-text-fill:#fff;
 }
 
