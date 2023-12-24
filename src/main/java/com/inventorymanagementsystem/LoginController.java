@@ -63,11 +63,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void dropShowAffect(){
-        DropShadow original=new DropShadow(20, Color.valueOf("#ae44a5"));
-        f_logo.setEffect(original);
-        c_logo.setEffect(original);
-    }
 
     public void onExit(){
         System.exit(0);
@@ -118,6 +113,5 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dropShowAffect();
     }
 }

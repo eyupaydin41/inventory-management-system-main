@@ -28,12 +28,10 @@ import org.controlsfx.control.textfield.TextFields;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.burningwave.core.assembler.StaticComponentContainer.Modules;
@@ -284,17 +282,19 @@ public class DashboardController implements Initializable {
     }
 
     public void activateAnchorPane(){
+        Button[] btnlist = {dashboard_btn,billing_btn,purchase_btn,customer_btn,sales_btn};
         dashboard_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(true);
             billing_pane.setVisible(false);
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+
+            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         billing_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -302,11 +302,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         customer_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -314,11 +314,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(true);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         sales_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -326,11 +326,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(true);
             purchase_pane.setVisible(false);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
+            purchase_btn.setStyle("-fx-background-color:transparent");
         });
         purchase_btn.setOnMouseClicked(mouseEvent -> {
             dasboard_pane.setVisible(false);
@@ -338,11 +338,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(true);
-            dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            billing_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            customer_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            sales_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.2),  rgba(255,106,239,0.2))");
-            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , rgba(121,172,255,0.7),  rgba(255,106,239,0.7))");
+            dashboard_btn.setStyle("-fx-background-color:transparent");
+            billing_btn.setStyle("-fx-background-color:transparent");
+            customer_btn.setStyle("-fx-background-color:transparent");
+            sales_btn.setStyle("-fx-background-color:transparent");
+            purchase_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
             });
 
 
@@ -1229,9 +1229,56 @@ public class DashboardController implements Initializable {
         dash_total_stocks.setText(String.valueOf(totalStockLeft));
     }
 
-    public void getSalesDetailsOfThisMonth(){
+    public String translateMonth() {
         LocalDate date=LocalDate.now();
         String monthName = date.getMonth().name();
+
+        switch (monthName) {
+            case "JANUARY":
+                monthName = "OCAK";
+                break;
+            case "FEBRUARY":
+                monthName = "ŞUBAT";
+                break;
+            case "MARCH":
+                monthName = "MART";
+                break;
+            case "APRİL":
+                monthName = "NİSAN";
+                break;
+            case "MAY":
+                monthName = "MAYIS";
+                break;
+            case "JUNE":
+                monthName = "HAZİRAN";
+                break;
+            case "JULY":
+                monthName = "TEMMUZ";
+                break;
+            case "AUGUST":
+                monthName = "AĞUSTOS";
+                break;
+            case "SEPTEMBER":
+                monthName = "EYLÜL";
+                break;
+            case "OCTOBER":
+                monthName = "EKİM";
+                break;
+            case "NOVEMBER":
+                monthName = "KASIM";
+                break;
+            case "DECEMBER":
+                monthName = "ARALIK";
+                break;
+        }
+        return monthName;
+    }
+
+    public void getSalesDetailsOfThisMonth(){
+        LocalDate date=LocalDate.now();
+
+
+
         String month=Integer.toString(date.getMonthValue());
         String year = Integer.toString(date.getYear());
         String concatYear = year + "-" + month;
@@ -1248,7 +1295,7 @@ public class DashboardController implements Initializable {
                 }else{
                     dash_total_sales_this_month.setText(result);
                 }
-                dash_total_sales_this_month_name.setText(monthName);
+                dash_total_sales_this_month_name.setText(translateMonth());
             }
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1278,7 +1325,7 @@ public class DashboardController implements Initializable {
                 }else{
                     dash_total_items_sold_this_month.setText(result);
                 }
-                dash_total_sales_items_this_month_name.setText(monthName);
+                dash_total_sales_items_this_month_name.setText(translateMonth());
             }
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);

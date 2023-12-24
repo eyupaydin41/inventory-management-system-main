@@ -1,5 +1,5 @@
 .login-bg{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
+    -fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%);
 }
 
 .textfield-design{
@@ -10,13 +10,13 @@
 }
 
 .login-button{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
+    -fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%);
 -fx-background-radius:20px;
 -fx-cursor:hand;
 }
 
 .close{
--fx-background-color:linear-gradient(to bottom right , #2f466b, #662d60);
+    -fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%);
 -fx-background-radius:3px;
 -fx-cursor:hand;
 }
