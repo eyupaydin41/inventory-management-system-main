@@ -3,14 +3,12 @@ package com.inventorymanagementsystem.entity;
 public class Product {
     private int id;
     private String itemNumber;
-    private String ItemGroup;
     private int quantity;
     private double price;
 
-    public Product(int id, String itemNumber, String itemGroup, int quantity, double price) {
+    public Product(int id, String itemNumber, int quantity, double price) {
         this.id = id;
         this.itemNumber = itemNumber;
-        ItemGroup = itemGroup;
         this.quantity = quantity;
         this.price = price;
     }
@@ -29,14 +27,6 @@ public class Product {
 
     public void setItemNumber(String itemNumber) {
         this.itemNumber = itemNumber;
-    }
-
-    public String getItemGroup() {
-        return ItemGroup;
-    }
-
-    public void setItemGroup(String itemGroup) {
-        ItemGroup = itemGroup;
     }
 
     public int getQuantity() {

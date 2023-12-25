@@ -98,21 +98,22 @@
                      <children>
                         <Pane layoutX="44.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
                            <children>
-                              <Label layoutX="48.0" layoutY="56.0" text="TOPLAM STOK" textFill="WHITE">
+                              <Label layoutX="51.0" layoutY="75.0" text="TOPLAM STOK" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_stocks" alignment="CENTER" layoutX="18.0" layoutY="94.0" prefHeight="36.0" prefWidth="191.0" text="32" textFill="WHITE">
+                              <Label fx:id="dash_total_stocks" alignment="CENTER" layoutX="18.0" layoutY="95.0" prefHeight="36.0" prefWidth="191.0" text="32" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
+                              <FontAwesomeIconView fill="WHITE" glyphName="CUBES" layoutX="91.0" layoutY="69.0" size="35" text="" />
                            </children>
                         </Pane>
                         <Pane layoutX="310.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
                            <children>
-                              <Label layoutX="45.0" layoutY="57.0" text="SATILAN ÜRÜN" textFill="WHITE">
+                              <Label layoutX="47.0" layoutY="73.0" text="SATILAN ÜRÜN" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -122,63 +123,67 @@
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
+                              <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" layoutX="97.0" layoutY="67.0" size="35" />
                            </children>
                         </Pane>
                         <Pane layoutX="569.0" layoutY="47.0" prefHeight="200.0" prefWidth="227.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
                            <children>
-                              <Label layoutX="53.0" layoutY="56.0" text="ALINAN ÜRÜN" textFill="WHITE">
+                              <Label layoutX="54.0" layoutY="73.0" text="ALINAN ÜRÜN" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_purchase" alignment="CENTER" layoutX="17.0" layoutY="94.0" prefHeight="36.0" prefWidth="200.0" text="50" textFill="WHITE">
+                              <Label fx:id="dash_total_purchase" alignment="CENTER" layoutX="17.0" layoutY="93.0" prefHeight="36.0" prefWidth="200.0" text="50" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
+                              <FontAwesomeIconView fill="WHITE" glyphName="CART_ARROW_DOWN" layoutX="99.0" layoutY="65.0" size="35" />
                            </children>
                         </Pane>
-                        <Pane layoutX="104.0" layoutY="298.0" prefHeight="200.0" prefWidth="294.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
+                        <Pane layoutX="105.0" layoutY="298.0" prefHeight="200.0" prefWidth="294.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
                            <children>
-                              <Label alignment="CENTER" layoutX="6.0" layoutY="51.0" prefHeight="27.0" prefWidth="287.0" text="TOPLAM SATIŞ GELİRİ" textFill="WHITE">
+                              <Label alignment="CENTER" layoutX="6.0" layoutY="64.0" prefHeight="27.0" prefWidth="287.0" text="TOPLAM SATIŞ GELİRİ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_sales_this_month" layoutX="110.0" layoutY="79.0" prefHeight="36.0" prefWidth="191.0" text="15000" textFill="WHITE">
+                              <Label fx:id="dash_total_sales_this_month" layoutX="105.0" layoutY="93.0" prefHeight="45.0" prefWidth="171.0" text="15000" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_sales_this_month_name" alignment="CENTER" layoutX="71.0" layoutY="122.0" prefHeight="28.0" prefWidth="156.0" text="MAY" textFill="WHITE">
+                              <Label fx:id="dash_total_sales_this_month_name" alignment="CENTER" layoutX="72.0" layoutY="135.0" prefHeight="28.0" prefWidth="156.0" text="MAYIS" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="84.0" layoutY="78.0" prefHeight="45.0" prefWidth="26.0" text="₺" textFill="WHITE">
+                              <Label layoutX="84.0" layoutY="93.0" prefHeight="45.0" prefWidth="26.0" text="₺" textFill="WHITE">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Label>
+                              <FontAwesomeIconView fill="WHITE" glyphName="MONEY" layoutX="129.0" layoutY="52.0" size="35" text="" />
                            </children>
                         </Pane>
                         <Pane layoutX="452.0" layoutY="298.0" prefHeight="200.0" prefWidth="287.0" styleClass="dasboard_box" stylesheets="@dashboard.css">
                            <children>
-                              <Label alignment="CENTER" layoutX="20.0" layoutY="51.0" prefHeight="22.0" prefWidth="247.0" text="SATILAN ÜRÜN (AY)" textFill="WHITE">
+                              <Label alignment="CENTER" layoutX="19.0" layoutY="65.0" prefHeight="22.0" prefWidth="247.0" text="SATILAN ÜRÜN (AY)" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_items_sold_this_month" alignment="CENTER" layoutX="19.0" layoutY="78.0" prefHeight="36.0" prefWidth="247.0" text="9" textFill="WHITE">
+                              <Label fx:id="dash_total_items_sold_this_month" alignment="CENTER" layoutX="20.0" layoutY="95.0" prefHeight="36.0" prefWidth="247.0" text="9" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="30.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dash_total_sales_items_this_month_name" alignment="CENTER" layoutX="68.0" layoutY="121.0" prefHeight="28.0" prefWidth="149.0" text="MAY" textFill="WHITE">
+                              <Label fx:id="dash_total_sales_items_this_month_name" alignment="CENTER" layoutX="69.0" layoutY="131.0" prefHeight="28.0" prefWidth="149.0" text="MAYIS" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
+                              <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" layoutX="127.0" layoutY="54.0" size="35" />
                            </children>
                         </Pane>
                      </children></AnchorPane>
@@ -303,7 +308,7 @@
                            </font>
                         </Button>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="customer_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0">
+                  <AnchorPane fx:id="customer_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
                      <children>
                         <TableView fx:id="customer_table" layoutX="13.0" layoutY="134.0" onMouseClicked="#selectCustomerTableData" prefHeight="487.0" prefWidth="794.0" stylesheets="@dashboard.css">
                            <columns>
@@ -382,16 +387,17 @@
                            </font>
                         </Label>
                      </children></AnchorPane>
-                  <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0" visible="false">
+                  <AnchorPane fx:id="purchase_pane" layoutX="-1.0" layoutY="55.0" prefHeight="639.0" prefWidth="820.0">
                      <children>
                         <TableView fx:id="purchase_table" editable="true" layoutX="13.0" layoutY="68.0" onMouseClicked="#selectBillingTableData" prefHeight="286.0" prefWidth="794.0" stylesheets="@dashboard.css">
                            <columns>
                               <TableColumn fx:id="purchase_col_id" prefWidth="69.60000610351562" text="ID" />
-                              <TableColumn fx:id="purchase_col_invoice" prefWidth="161.5999755859375" text="Mağaza İsmi" />
-                              <TableColumn fx:id="purchase_col_shop_details" prefWidth="163.20001220703125" text="Sipariş Detayı" />
-                              <TableColumn fx:id="purchase_col_total_items" minWidth="0.0" prefWidth="136.0" text="Ürün Miktarı" />
-                              <TableColumn fx:id="purchase_col_total_amount" minWidth="0.0" prefWidth="136.0" text="Toplam Fiyat" />
-                              <TableColumn fx:id="purchase_col_date_of_purchase" minWidth="0.0" prefWidth="125.59995117187498" text="Sipariş Tarihi" />
+                              <TableColumn fx:id="purchase_col_invoice_no" prefWidth="99.0" text="Ürün No" />
+                              <TableColumn fx:id="purchase_col_invoice" prefWidth="117.0" text="Mağaza İsmi" />
+                              <TableColumn fx:id="purchase_col_shop_details" prefWidth="145.0" text="Sipariş Detayı" />
+                              <TableColumn fx:id="purchase_col_total_items" minWidth="0.0" prefWidth="129.0" text="Ürün Miktarı" />
+                              <TableColumn fx:id="purchase_col_total_amount" minWidth="0.0" prefWidth="123.0" text="Toplam Fiyat" />
+                              <TableColumn fx:id="purchase_col_date_of_purchase" minWidth="0.0" prefWidth="110.0" text="Sipariş Tarihi" />
                            </columns>
                         </TableView>
                         <Button fx:id="purchase_btn_delete" layoutX="744.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#deletePurchaseData" prefHeight="32.0" prefWidth="50.0" styleClass="add" stylesheets="@dashboard.css">
@@ -414,12 +420,12 @@
                               <Font name="Dubai Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="81.0" layoutY="410.0" text="Mağaza İsmi:">
+                        <Label layoutX="82.0" layoutY="393.0" text="Mağaza İsmi:">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="80.0" layoutY="454.0" text="Sipariş Detayı:">
+                        <Label layoutX="81.0" layoutY="433.0" text="Sipariş Detayı:">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -434,7 +440,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="81.0" layoutY="496.0" text="Tarih:">
+                        <Label layoutX="81.0" layoutY="514.0" text="Tarih:">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -444,11 +450,11 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="purchase_name" layoutX="200.0" layoutY="410.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <TextField fx:id="purchase_details" layoutX="200.0" layoutY="454.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_name" layoutX="201.0" layoutY="393.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <TextField fx:id="purchase_details" layoutX="201.0" layoutY="433.0" styleClass="textfield" stylesheets="@dashboard.css" />
                         <TextField fx:id="purchase_price" layoutX="591.0" layoutY="455.0" onKeyReleased="#onPurchaseInputTextChanged" styleClass="textfield" stylesheets="@dashboard.css" />
                         <TextField fx:id="purchase_totalamount" disable="true" editable="false" layoutX="591.0" layoutY="498.0" styleClass="textfield" stylesheets="@dashboard.css" />
-                        <DatePicker fx:id="purchase_date" layoutX="199.0" layoutY="496.0" styleClass="textfield" stylesheets="@dashboard.css" />
+                        <DatePicker fx:id="purchase_date" layoutX="199.0" layoutY="514.0" styleClass="textfield" stylesheets="@dashboard.css" />
                         <ComboBox fx:id="purchase_quantity" layoutX="591.0" layoutY="411.0" prefWidth="150.0" styleClass="textfield" stylesheets="@dashboard.css" />
                         <Button fx:id="purchase_btn_add" layoutX="720.0" layoutY="586.0" mnemonicParsing="false" onAction="#addPurchaseData" styleClass="add" stylesheets="@dashboard.css" text="Ekle">
                            <graphic>
@@ -473,6 +479,12 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
+                        <Label layoutX="81.0" layoutY="476.0" text="Ürün No:">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="prc_invoice_no" layoutX="200.0" layoutY="474.0" styleClass="textfield" stylesheets="@dashboard.css" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>

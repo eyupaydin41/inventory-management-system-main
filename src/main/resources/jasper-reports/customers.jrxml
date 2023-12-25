@@ -40,12 +40,12 @@
 			<staticText>
 				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="bcf29663-c4b8-483e-a197-e5f6920fd2a2"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Fashion Club]]></text>
+				<text><![CDATA[Market]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="63" y="46" width="200" height="22" uuid="c089ef81-84c2-4243-a7e9-0e0a8992e71a"/>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[Customers Details :]]></text>
+				<text><![CDATA[Müşteri Detayları :]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -64,19 +64,19 @@
 				<reportElement style="Column header" x="0" y="19" width="185" height="15" uuid="6efc330f-0dca-4274-8ef7-f76639d5186e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b09cf371-0c09-4b8e-ab9c-ca0caa9cebdf"/>
 				</reportElement>
-				<text><![CDATA[id]]></text>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="185" y="19" width="185" height="15" uuid="a1b5112f-5f2f-491c-8eed-159638447725">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb425c37-8e8d-4951-afe8-7bfa1011b934"/>
 				</reportElement>
-				<text><![CDATA[Name]]></text>
+				<text><![CDATA[İsim]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="370" y="19" width="185" height="15" uuid="2bf409d1-a459-4910-9711-8582f40e0baf">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce52831d-2de8-446a-8950-b87b14e38405"/>
 				</reportElement>
-				<text><![CDATA[phone_number]]></text>
+				<text><![CDATA[Telefon Numarası]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -121,7 +121,7 @@
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Customers :]]></text>
+				<text><![CDATA[Toplam Müşteri:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="305" y="20" width="143" height="30" uuid="d7026397-5d85-4bd1-9cb5-94d5d7a2729d"/>
@@ -139,7 +139,7 @@
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Sayfa "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="27402784-6be1-4e60-b9c7-c3664ea17454"/>

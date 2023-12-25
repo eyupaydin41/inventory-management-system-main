@@ -161,14 +161,14 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Fashion Club]]></text>
+					<text><![CDATA[Market]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="0a399baa-bad3-4b1a-9fe3-bb1c563e6a27"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Sales Report]]></text>
+					<text><![CDATA[Satış Raporu]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -181,7 +181,7 @@
 			<textField>
 				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="fed27553-a6c4-4a8a-9056-2f6f2589a3e5"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Sayfa "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="9f5ad531-d413-49c9-874b-8b99e8150fa6"/>
@@ -215,7 +215,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[id]]></text>
+								<text><![CDATA[ID]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -239,7 +239,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Invoice Number]]></text>
+								<text><![CDATA[Fatura No]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -263,7 +263,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Item Number]]></text>
+								<text><![CDATA[Ürün No]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -287,7 +287,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Name]]></text>
+								<text><![CDATA[İsim]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -311,7 +311,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Phone Number]]></text>
+								<text><![CDATA[Telefon Numarası]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -335,7 +335,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Price]]></text>
+								<text><![CDATA[Fiyat]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -359,7 +359,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Quantity]]></text>
+								<text><![CDATA[Miktar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -383,7 +383,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Total Amount]]></text>
+								<text><![CDATA[Miktar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -407,7 +407,7 @@
 								<textElement textAlignment="Center">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Date Of Sales]]></text>
+								<text><![CDATA[Satış Tarihi]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -429,7 +429,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Sales Amount: ]]></text>
+				<text><![CDATA[Toplam Gelir: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="490" y="10" width="65" height="20" uuid="9c848459-e71f-4906-a368-ab658b7e7f36"/>

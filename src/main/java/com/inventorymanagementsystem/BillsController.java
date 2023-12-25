@@ -62,7 +62,7 @@ public class BillsController implements Initializable {
             System.out.println(err.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();

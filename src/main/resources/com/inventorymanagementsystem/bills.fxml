@@ -10,21 +10,20 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="bills_print_anchor_pane" prefHeight="400.0" prefWidth="600.0" styleClass="billsanchorpane" stylesheets="@bills.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.BillsController">
+<AnchorPane fx:id="bills_print_anchor_pane" prefHeight="400.0" prefWidth="600.0" styleClass="billsanchorpane" stylesheets="@bills.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.inventorymanagementsystem.BillsController">
    <children>
       <Button fx:id="bills_btn_close" layoutX="528.0" layoutY="14.0" mnemonicParsing="false" onAction="#onExit" prefHeight="30.0" prefWidth="58.0" styleClass="close" stylesheets="@bills.css">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="18.0" />
          </graphic>
       </Button>
-      <TextField fx:id="bills_search_invoice_number" layoutX="226.0" layoutY="157.0" prefHeight="50.0" prefWidth="323.0" promptText="Enter Invoice Number" styleClass="textfield" stylesheets="@bills.css" />
-      <Label layoutX="63.0" layoutY="157.0" prefHeight="50.0" prefWidth="154.0" text="Invoice Number :">
+      <TextField fx:id="bills_search_invoice_number" layoutX="226.0" layoutY="157.0" prefHeight="50.0" prefWidth="323.0" promptText="Fatura Numarasını Girin" styleClass="textfield" stylesheets="@bills.css" />
+      <Label layoutX="63.0" layoutY="157.0" prefHeight="50.0" prefWidth="154.0" text="Fatura Numarası:">
          <font>
             <Font name="Dubai Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="bills_btn_print_bill" alignment="CENTER" contentDisplay="TOP" layoutX="65.0" layoutY="244.0" mnemonicParsing="false" onAction="#searchAndPrintBillDetails" prefHeight="46.0" prefWidth="486.0" styleClass="print" stylesheets="@bills.css" text="Print Bill">
+      <Button fx:id="bills_btn_print_bill" alignment="CENTER" contentDisplay="TOP" layoutX="65.0" layoutY="244.0" mnemonicParsing="false" onAction="#searchAndPrintBillDetails" prefHeight="46.0" prefWidth="486.0" styleClass="print" stylesheets="@bills.css" text="Fatura Yazdır">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="24.0" />
          </graphic>
@@ -32,7 +31,7 @@
             <Font name="Dubai Bold" size="18.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" layoutX="59.0" layoutY="77.0" prefHeight="50.0" prefWidth="486.0" text="Print Bill Details:">
+      <Label alignment="CENTER" layoutX="59.0" layoutY="77.0" prefHeight="50.0" prefWidth="486.0" text="Fatura Detaylarını Yazdır">
          <font>
             <Font name="Dubai Bold" size="24.0" />
          </font>

@@ -132,14 +132,14 @@
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Fashion Club]]></text>
+				<text><![CDATA[Market]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="230" y="64" width="196" height="32" uuid="ea798e7f-73ea-43db-be42-301b5e1037c9"/>
 				<textElement>
 					<font fontName="Times New Roman" size="20" pdfFontName="Times-Roman"/>
 				</textElement>
-				<text><![CDATA[Purchase Report]]></text>
+				<text><![CDATA[Satın Alma Raporu]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -159,7 +159,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="3a6deb2b-90af-40e2-b90d-d18cb599e55a"/>
@@ -219,7 +219,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Invoice Number]]></text>
+								<text><![CDATA[Fatura Numarası]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -244,7 +244,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Shop Details]]></text>
+								<text><![CDATA[Sipariş Detayı]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -269,7 +269,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Total Items]]></text>
+								<text><![CDATA[Miktar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -294,7 +294,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Total Amount]]></text>
+								<text><![CDATA[Toplam Tutar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -319,7 +319,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Date Of Purchase ]]></text>
+								<text><![CDATA[Sipariş Tarihi]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter style="Table_CH" height="30"/>
@@ -341,7 +341,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Purchase Amount:]]></text>
+				<text><![CDATA[Toplam Satış Geliri:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="460" y="0" width="95" height="30" uuid="eb69c119-19d8-4587-b1db-0b132a22eb3a"/>

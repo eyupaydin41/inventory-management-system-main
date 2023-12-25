@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
@@ -187,7 +187,7 @@
 				<textElement>
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Bill to:]]></text>
+				<text><![CDATA[Bilgiler:]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="80" width="556" height="1" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246">
@@ -201,7 +201,7 @@
 				<textElement textAlignment="Right">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Date:]]></text>
+				<text><![CDATA[Tarih:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="450" y="10" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
@@ -211,8 +211,8 @@
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center">
-				<reportElement x="0" y="0" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
-				<imageExpression><![CDATA["jasper-reports/invoice_logo.png"]]></imageExpression>
+				<reportElement x="0" y="10" width="84" height="81" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<imageExpression><![CDATA["jasper-reports/istun.png"]]></imageExpression>
 			</image>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="465" y="30" width="84" height="20" uuid="3836ce65-eca3-4cad-a6de-b1818def0a2b"/>
@@ -227,7 +227,7 @@
 				<textElement textAlignment="Right">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Invoice: #]]></text>
+				<text><![CDATA[Fatura No: #]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="0" width="210" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
@@ -237,19 +237,19 @@
 				<textElement>
 					<font size="19" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ABC]]></text>
+				<text><![CDATA[Market]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="55" width="205" height="15" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
-				<text><![CDATA[+91234567894]]></text>
+				<text><![CDATA[+905555555555]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="25" width="205" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
-				<text><![CDATA[ABC Bazaar]]></text>
+				<text><![CDATA[Market]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="40" width="205" height="15" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
-				<text><![CDATA[India (IN)]]></text>
+				<text><![CDATA[Türkiye (TR)]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="70" y="120" width="100" height="30" uuid="3c090731-8ec3-4289-9840-b63289159d10"/>
@@ -288,7 +288,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Item Number]]></text>
+								<text><![CDATA[ürün No]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="30">
@@ -308,7 +308,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Price]]></text>
+								<text><![CDATA[Fiyat]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="30">
@@ -327,7 +327,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="14" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Final Amount:]]></text>
+								<text><![CDATA[Son Tutar:]]></text>
 							</staticText>
 						</jr:tableFooter>
 						<jr:columnHeader style="Table 1_CH" height="30">
@@ -336,7 +336,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Quantity]]></text>
+								<text><![CDATA[Miktar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="30">
@@ -364,7 +364,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Total Amount]]></text>
+								<text><![CDATA[Toplam Tutar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="30">
@@ -382,14 +382,14 @@
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Name:]]></text>
+				<text><![CDATA[İsim:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="150" width="70" height="30" uuid="73cebb49-5f77-4f99-8fae-5ea6abe4ec7e"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Phone :]]></text>
+				<text><![CDATA[Telefon No :]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -406,7 +406,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="9" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[THANK YOU FOR YOUR BUSINESS]]></text>
+				<text><![CDATA[Teşekkürler!]]></text>
 			</staticText>
 		</band>
 	</lastPageFooter>

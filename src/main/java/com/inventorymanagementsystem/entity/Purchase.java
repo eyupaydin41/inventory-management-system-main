@@ -3,14 +3,16 @@ package com.inventorymanagementsystem.entity;
 public class Purchase {
     private int id;
     private String invoice;
+    private String invoice_no;
     private String shopDetails;
     private int totalItems;
     private Double totalAmount;
     private String dateOfPurchase;
 
-    public Purchase(int id, String invoice, String shopDetails, int totalItems, Double totalAmount, String dateOfPurchase) {
+    public Purchase(int id, String invoice,String invoice_no, String shopDetails, int totalItems, Double totalAmount, String dateOfPurchase) {
         this.id = id;
         this.invoice = invoice;
+        this.invoice_no = invoice_no;
         this.shopDetails = shopDetails;
         this.totalItems = totalItems;
         this.totalAmount = totalAmount;
@@ -63,5 +65,13 @@ public class Purchase {
 
     public void setDateOfPurchase(String dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public String getInvoice_no() {
+        return invoice_no;
+    }
+
+    public void setInvoice_no(String invoice_no) {
+        this.invoice_no = invoice_no;
     }
 }

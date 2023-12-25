@@ -58,6 +58,9 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane dasboard_pane;
 
+    @FXML
+    private TextField prc_invoice_no;
+
 
     @FXML
     private Button purchase_btn;
@@ -222,6 +225,9 @@ public class DashboardController implements Initializable {
     private TableColumn<?, ?> purchase_col_invoice;
 
     @FXML
+    private TableColumn<?, ?> purchase_col_invoice_no;
+
+    @FXML
     private TableColumn<?, ?> purchase_col_shop_details;
 
     @FXML
@@ -289,6 +295,11 @@ public class DashboardController implements Initializable {
             customer_pane.setVisible(false);
             sales_pane.setVisible(false);
             purchase_pane.setVisible(false);
+            getItemSoldThisMonth();
+            getTotalPurchase();
+            getTotalSales();
+            getTotalPurchaseAmount();
+            getTotalStocks();
 
             dashboard_btn.setStyle("-fx-background-color:linear-gradient(to bottom right , #21965a 0%, #00b2c2 100%)");
             billing_btn.setStyle("-fx-background-color:transparent");
@@ -370,13 +381,13 @@ public class DashboardController implements Initializable {
             resultSet=statement.executeQuery(sql);
             Product product;
             while (resultSet.next()){
-                product=new Product(Integer.parseInt(resultSet.getString("id")),resultSet.getString("item_number"),resultSet.getString("item_group"),Integer.parseInt(resultSet.getString("quantity")),Double.parseDouble(resultSet.getString("price")));
+                product=new Product(Integer.parseInt(resultSet.getString("id")),resultSet.getString("item_number"),Integer.parseInt(resultSet.getString("quantity")),Double.parseDouble(resultSet.getString("price")));
                 productsList.add(product);
             }
         }catch (Exception err){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -438,13 +449,12 @@ public class DashboardController implements Initializable {
     public void getPriceOfTheItem(){
         try {
             Product product = productsList.stream().filter(prod -> prod.getItemNumber().equals(bill_item.getText())).findAny().get();
-            System.out.println("Price " + product.getPrice());
             bill_price.setText(String.valueOf((int) product.getPrice()));
         }catch (Exception err){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Exception Item Number : "+err.getMessage());
+            alert.setContentText(err.getMessage());
             alert.showAndWait();
         }
     } // Products tablosunda bulunan ürünün fiyatını otomatik doldurma
@@ -470,33 +480,43 @@ public class DashboardController implements Initializable {
     public void addBillingData(){
         if(bill_item.getText().isBlank()||bill_quantity.getSelectionModel().isEmpty()||bill_price.getText().isBlank()||bill_total_amount.getText().isBlank()){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
+            alert.setContentText("Lütfen ürün numarası, miktar ve fiyat gibi zorunlu verileri doldurun.");
             alert.showAndWait();
             return;
         }
-        connection=Database.getInstance().connectDB();
-        String sql="INSERT INTO BILLING(item_number,quantity,price,total_amount)VALUES(?,?,?,?)";
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, bill_item.getText());
-            preparedStatement.setInt(2, Integer.parseInt(bill_quantity.getValue().toString()));
-            preparedStatement.setInt(3,Integer.parseInt(bill_price.getText()));
-            preparedStatement.setInt(4, Integer.parseInt(bill_total_amount.getText()));
-            int result = preparedStatement.executeUpdate();
-            if (result > 0) {
-                showBillingData();
-                billClearData();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
-                alert.showAndWait();
+
+        if(productsList.stream().anyMatch(product -> product.getItemNumber().equals(bill_item.getText()))) {
+            connection = Database.getInstance().connectDB();
+            String sql = "INSERT INTO BILLING(item_number,quantity,price,total_amount)VALUES(?,?,?,?)";
+            try {
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, bill_item.getText());
+                preparedStatement.setInt(2, Integer.parseInt(bill_quantity.getValue().toString()));
+                preparedStatement.setInt(3, Integer.parseInt(bill_price.getText()));
+                preparedStatement.setInt(4, Integer.parseInt(bill_total_amount.getText()));
+                int result = preparedStatement.executeUpdate();
+                if (result > 0) {
+                    showBillingData();
+                    billClearData();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Hata");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Lütfen ürün numarası, miktar ve fiyat gibi zorunlu verileri doldurun.\n");
+                    alert.showAndWait();
+                }
+            } catch (Exception err) {
+                err.printStackTrace();
             }
-        } catch (Exception err) {
-            err.printStackTrace();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hata");
+            alert.setHeaderText(null);
+            alert.setContentText("'"+bill_item.getText() + "' numaralı bir ürün bulunamadı.");
+            alert.showAndWait();
+            bill_item.clear();
         }
     } // Fatura ekleme
 
@@ -601,25 +621,25 @@ public class DashboardController implements Initializable {
                     billClearData();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
+                    alert.setTitle("Hata");
                     alert.setHeaderText(null);
-                    alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
+                    alert.setContentText("Lütfen ürün numarası, miktar ve fiyat gibi zorunlu verileri doldurun.\n");
                     alert.showAndWait();
                 }
             } else {
                 // ComboBox'tan seçilen değer null ise kullanıcıyı bilgilendir
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
+                alert.setTitle("Hata");
                 alert.setHeaderText(null);
-                alert.setContentText("Please select a quantity.");
+                alert.setContentText("Lütfen miktar seçiniz.");
                 alert.showAndWait();
             }
         } catch (NumberFormatException e) {
             // Sayısal dönüşüm hatası kontrolü
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
-            alert.setContentText("Please enter valid numeric values for quantity, price, and total amount.");
+            alert.setContentText("Lütfen miktar, fiyat ve toplam tutar için geçerli değerler girin.");
             alert.showAndWait();
         } catch (Exception err) {
             err.printStackTrace();
@@ -644,9 +664,9 @@ public class DashboardController implements Initializable {
                 billClearData();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
+                alert.setTitle("Mesaj");
                 alert.setHeaderText(null);
-                alert.setContentText("No data present in the billing table..");
+                alert.setContentText("Veri yok!");
                 alert.showAndWait();
             }
         } catch (Exception err) {
@@ -656,9 +676,9 @@ public class DashboardController implements Initializable {
     public boolean saveCustomerDetails(){
         if(bill_phone.getText().isBlank() || bill_name.getText().isBlank()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Kindly Fill Customer Name and Phone number.");
+            alert.setContentText("Lütfen müşteri adını ve telefon numarasını doldurun.");
             alert.showAndWait();
             return false;
         }
@@ -668,14 +688,7 @@ public class DashboardController implements Initializable {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,bill_phone.getText());
             resultSet= preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Customer Data is already present in customer table. Proceeding further to save invoice.");
-                alert.showAndWait();
-                return true;
-            } else {
+            if (!resultSet.next()) {
                 String customerSql="INSERT INTO CUSTOMERS(name,phone_number) VALUES(?,?)";
                 preparedStatement = connection.prepareStatement(customerSql);
                 preparedStatement.setString(1,bill_name.getText());
@@ -686,9 +699,9 @@ public class DashboardController implements Initializable {
                     return true;
                 }else{
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Message");
+                    alert.setTitle("Mesaj");
                     alert.setHeaderText(null);
-                    alert.setContentText("Customer Data not saved. Please fill name and phone number correctly.");
+                    alert.setContentText("Müşteri verileri kaydedilmedi. Lütfen müşteri adını ve telefon numarasını doğru girin.");
                     alert.showAndWait();
                     return false;
                 }
@@ -708,11 +721,9 @@ public class DashboardController implements Initializable {
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                   String custId=resultSet.getString("id");
-                  // GET BILLING TABLE DETAILS
                   String getBillingDetails="SELECT * FROM BILLING";
                   preparedStatement=connection.prepareStatement(getBillingDetails);
                   resultSet=preparedStatement.executeQuery();
-                  // SAVE INVOICE DETAILS ALONG WITH CUSTOMER ID AND DATE IN SALES TABLE
                   int count=0;
                   while (resultSet.next()){
                       String salesDetailsSQL="INSERT INTO sales(inv_num,item_number,cust_id,price,quantity,total_amount,date) VALUES(?,?,?,?,?,?,?)";
@@ -734,22 +745,16 @@ public class DashboardController implements Initializable {
                       setInvoiceNum();
                       showDashboardData();
                       Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                      alert.setTitle("Message");
+                      alert.setTitle("Mesaj");
                       alert.setHeaderText(null);
-                      alert.setContentText("Data is successfully saved in the sales tables. ");
-                      alert.showAndWait();
-                  }else{
-                      Alert alert = new Alert(Alert.AlertType.ERROR);
-                      alert.setTitle("Error Message");
-                      alert.setHeaderText(null);
-                      alert.setContentText("No Data saved in the sales table. ");
+                      alert.setContentText("Veriler satışlar tablosuna başarıyla kaydedildi. ");
                       alert.showAndWait();
                   }
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
+                alert.setTitle("Hata");
                 alert.setHeaderText(null);
-                alert.setContentText("Kindly fill Customer Details such as Name and Phone Number correctly.");
+                alert.setContentText("Lütfen Ad ve Telefon Numarası gibi müşteri bilgilerini doğru şekilde doldurun.");
                 alert.showAndWait();
             }
         }catch (Exception err){
@@ -803,7 +808,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -851,7 +856,7 @@ public class DashboardController implements Initializable {
 
         if (cust_field_name.getText().isEmpty() || cust_field_phone.getText().isEmpty()) {
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
             alert.setContentText("Müşteri ismi ve telefon numarası boş bırakılamaz.");
             alert.showAndWait();
@@ -867,9 +872,9 @@ public class DashboardController implements Initializable {
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                 Alert alert=new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
+                alert.setTitle("Mesaj");
                 alert.setHeaderText(null);
-                alert.setContentText("Customer already present in the customer table.");
+                alert.setContentText("Müşteri zaten müşteri tablosunda mevcut.");
                 alert.showAndWait();
                 return false;
             }else {
@@ -897,9 +902,9 @@ public class DashboardController implements Initializable {
                 customerClearData();
             }else{
                 Alert alert=new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
+                alert.setTitle("Hata");
                 alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as name and phone number.");
+                alert.setContentText("Lütfen isim ve telefon numarası gibi zorunlu verileri doldurun.");
                 alert.showAndWait();
             }
         }catch (Exception err){
@@ -920,9 +925,9 @@ public class DashboardController implements Initializable {
     public void updateCustomerData(){
         if(cust_field_phone.getText().isBlank() || cust_field_name.getText().isBlank() ){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as name, phone number .");
+            alert.setContentText("Lütfen isim, telefon numarası gibi zorunlu verileri doldurun.");
             alert.showAndWait();
             return;
         }
@@ -951,9 +956,9 @@ public class DashboardController implements Initializable {
                         showSalesData();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error Message");
+                        alert.setTitle("Hata");
                         alert.setHeaderText(null);
-                        alert.setContentText("Please fill the mandatory data such as name, phone number .");
+                        alert.setContentText("Lütfen isim, telefon numarası gibi zorunlu verileri doldurun.");
                         alert.showAndWait();
                     }
                 } catch (SQLException e) {
@@ -968,9 +973,9 @@ public class DashboardController implements Initializable {
     public void deleteCustomerData(){
         if(customer_table.getSelectionModel().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Please select customer for deletion.");
+            alert.setContentText("Lütfen silinecek müşteriyi seçin.");
             alert.showAndWait();
             return;
         }
@@ -1003,15 +1008,15 @@ public class DashboardController implements Initializable {
                 customerClearData();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
+                alert.setTitle("Mesaj");
                 alert.setHeaderText(null);
-                alert.setContentText("No data present in the customer table.");
+                alert.setContentText("Müşteri tablosunda veri yok.");
                 alert.showAndWait();
             }
         } catch (Exception err) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1049,7 +1054,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1119,7 +1124,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1150,7 +1155,7 @@ public class DashboardController implements Initializable {
             resultSet=statement.executeQuery(sql);
             Purchase purchase;
             while (resultSet.next()){
-                purchase=new Purchase(Integer.parseInt(resultSet.getString("id")),resultSet.getString("invoice"),resultSet.getString("shop_and_address"),Integer.parseInt(resultSet.getString("total_items")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date_of_purchase"));
+                purchase=new Purchase(Integer.parseInt(resultSet.getString("id")),resultSet.getString("invoice"),resultSet.getString("invoice_no"),resultSet.getString("shop_and_address"),Integer.parseInt(resultSet.getString("total_items")),Double.parseDouble(resultSet.getString("total_amount")),resultSet.getString("date_of_purchase"));
                 purchaseList.addAll(purchase);
             }
         }catch (Exception err){
@@ -1162,6 +1167,7 @@ public class DashboardController implements Initializable {
         ObservableList<Purchase> purchaseList=listPurchaseData();
         purchase_col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         purchase_col_invoice.setCellValueFactory(new PropertyValueFactory<>("invoice"));
+        purchase_col_invoice_no.setCellValueFactory(new PropertyValueFactory<>("invoice_no"));
         purchase_col_shop_details.setCellValueFactory(new PropertyValueFactory<>("shopDetails"));
         purchase_col_total_items.setCellValueFactory(new PropertyValueFactory<>("totalItems"));
         purchase_col_total_amount.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
@@ -1189,7 +1195,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1214,7 +1220,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1300,7 +1306,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1330,7 +1336,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
@@ -1338,35 +1344,58 @@ public class DashboardController implements Initializable {
     }
 
     public void addPurchaseData(){
-        if(purchase_name.getText().isBlank()||purchase_quantity.getSelectionModel().isEmpty()||purchase_price.getText().isBlank()||purchase_details.getText().isBlank()){
+        if(purchase_name.getText().isBlank()||purchase_quantity.getSelectionModel().isEmpty()||purchase_price.getText().isBlank()||purchase_details.getText().isBlank()|prc_invoice_no.getText().isBlank()){
             Alert alert=new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
+            alert.setTitle("Mesaj");
             alert.setHeaderText(null);
-            alert.setContentText("Please fill the mandatory data such as item number, quantity and price .");
+            alert.setContentText("Lütfen ürün numarası, miktar ve fiyat gibi zorunlu verileri doldurun.");
             alert.showAndWait();
             return;
         }
+        String purchaseName = prc_invoice_no.getText();
+        int purchaseQuantity = Integer.parseInt(purchase_quantity.getValue().toString());
+        int purchasePrice = Integer.parseInt(purchase_price.getText());
+
+
+
+
         connection=Database.getInstance().connectDB();
-        String sql="INSERT INTO PURCHASE(invoice,shop_and_address,total_items,total_amount,date_of_purchase)VALUES(?,?,?,?,?)";
+        String sql="INSERT INTO PURCHASE(invoice,shop_and_address,total_items,total_amount,date_of_purchase,invoice_no)VALUES(?,?,?,?,?,?)";
         try {
             purchase_total_amount.setText(String.valueOf(Integer.parseInt(purchase_price.getText())*Integer.parseInt(purchase_quantity.getValue().toString())));
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, purchase_name.getText());
             preparedStatement.setString(2, purchase_details.getText());
-            preparedStatement.setInt(3,Integer.parseInt(purchase_quantity.getValue().toString()));
+            preparedStatement.setInt(3,purchaseQuantity);
             preparedStatement.setDouble(4, Double.parseDouble(purchase_total_amount.getText()));
             preparedStatement.setDate(5, java.sql.Date.valueOf(purchase_date.getValue()));
+            preparedStatement.setString(6, purchaseName);
             int result = preparedStatement.executeUpdate();
             if (result > 0) {
                 showPurchaseData();
                 purchaseClearData();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
+                alert.setTitle("Hata");
                 alert.setHeaderText(null);
-                alert.setContentText("Please fill the mandatory data such as item number, quantity, and price.");
+                alert.setContentText("Lütfen ürün numarası, miktar ve fiyat gibi zorunlu verileri doldurun.");
                 alert.showAndWait();
             }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+
+        connection=Database.getInstance().connectDB();
+
+
+        String sql2="INSERT INTO PRODUCTS(item_number,quantity,price)VALUES(?,?,?)";
+        try {
+            preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setString(1, purchaseName);
+            preparedStatement.setInt(2,purchaseQuantity);
+            preparedStatement.setInt(3,purchasePrice);
+            preparedStatement.executeUpdate();
+
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -1386,9 +1415,9 @@ public class DashboardController implements Initializable {
                 showPurchaseData();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message");
+                alert.setTitle("Mesaj");
                 alert.setHeaderText(null);
-                alert.setContentText("No data present in the billing table..");
+                alert.setContentText("Veri yok!");
                 alert.showAndWait();
             }
         } catch (Exception err) {
@@ -1397,6 +1426,7 @@ public class DashboardController implements Initializable {
     }
 
     public void purchaseClearData(){
+        prc_invoice_no.clear();
         purchase_name.clear();
         purchase_details.clear();
         purchase_quantity.setValue(null);
@@ -1434,7 +1464,7 @@ public class DashboardController implements Initializable {
         }catch (Exception err){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Hata");
             alert.setHeaderText(null);
             alert.setContentText(err.getMessage());
             alert.showAndWait();
